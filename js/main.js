@@ -55,11 +55,17 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+const DESCRIPTION_LIST = [
+  'лучшие апартаменты в самом центре города',
+  'в шаговой доступности все главные достопримечательности',
+  'хороший вид из окна',
+  'бесплатный Wi-Fi',
+  'вкусный завтрак',
+];
+
 const SIMILAR_ADS_COUNT = 10;
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomFromRange(0, elements.length - 1)];
-};
+const getRandomArrayElement = (elements) => elements[getRandomFromRange(0, elements.length - 1)];
 
 const getRandomLengthArray = (elements) => {
   const maxLength = elements.length;
@@ -76,23 +82,21 @@ const getRandomLengthArray = (elements) => {
   return array;
 };
 
-const createAutor = () => {
-  return 'img/avatars/user' + USER_NUMBER.splice(0, 1)[0] + '.png';
-};
+const createAutor = () => `img/avatars/user ${USER_NUMBER.splice(0, 1)[0]} .png`;
 
-const getLocation = () => {
-  return {
+const getLocation = () => (
+  {
     lat: getRandomFloatFromRange(35.65000, 35.70000, 5),
     lng: getRandomFloatFromRange(139.70000, 139.80000, 5),
-  };
-};
+  }
+);
 
 const locationRandom = getLocation();
 
-const createOffer = () => {
-  return {
+const createOffer = () => (
+  {
     title: 'Уютное жилье в центре Токио',
-    address: locationRandom.lat + ', ' +locationRandom.lng,
+    address: `${locationRandom.lat}, ${locationRandom.lng}`,
     price: getRandomFromRange(5000, 100000),
     type: getRandomArrayElement(TYPE),
     rooms: getRandomFromRange(1, 5),
@@ -100,18 +104,18 @@ const createOffer = () => {
     checkin: getRandomArrayElement(CHECK_IN_OUT),
     checkout: getRandomArrayElement(CHECK_IN_OUT),
     feauters: getRandomLengthArray(FEATURES),
-    description: 'Лучшие апартаменты в самом центре города, в шаговой доступности все главные достопримечательности, хороший вид из окна, бесплатный Wi-Fi',
+    description: getRandomLengthArray(DESCRIPTION_LIST).join(),
     photos: getRandomLengthArray(PHOTOS),
-  };
-};
+  }
+);
 
-const createAd = () => {
-  return {
+const createAd = () => (
+  {
     autor: createAutor(),
     offer: createOffer(),
     location: getLocation(),
-  };
-};
+  }
+);
 
 const similarAds = Array.from(
   {length: SIMILAR_ADS_COUNT},

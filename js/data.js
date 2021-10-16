@@ -1,6 +1,6 @@
 //Модуль, который создает данные
 
-import {getRandomFromRange, getRandomFloatFromRange, getRandomLengthArray, getRandomArrayElement} from './until.js';
+import {getRandomFromRange, getRandomFloatFromRange, getRandomLengthArray, getRandomArrayElement} from './util.js';
 
 const USER_NUMBER = [
   '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
@@ -13,6 +13,25 @@ const TYPE = [
   'bungalow',
   'hotel',
 ];
+
+const getTypeName = (type) => {
+  switch(type) {
+    case 'flat':
+      return 'Квартира';
+    case 'palace':
+      return 'Дворец';
+    case 'house':
+      return 'Дом';
+    case 'bungalow':
+      return 'Бунгало';
+    case 'hotel':
+      return 'Отель';
+    default:
+      return 'Неизвестен';
+  }
+};
+
+export {getTypeName};
 
 const CHECK_IN_OUT = [
   '12:00',
@@ -45,7 +64,7 @@ const DESCRIPTION_LIST = [
 
 const SIMILAR_ADS_COUNT = 10;
 
-const createAutor = () => `img/avatars/user ${USER_NUMBER.splice(0, 1)[0]} .png`;
+const createAutor = () => `img/avatars/user${USER_NUMBER.splice(0, 1)[0]}.png`;
 
 const getLocation = () => (
   {
@@ -66,7 +85,7 @@ const createOffer = () => (
     guests: getRandomFromRange(1, 5),
     checkin: getRandomArrayElement(CHECK_IN_OUT),
     checkout: getRandomArrayElement(CHECK_IN_OUT),
-    feauters: getRandomLengthArray(FEATURES),
+    features: getRandomLengthArray(FEATURES),
     description: getRandomLengthArray(DESCRIPTION_LIST).join(),
     photos: getRandomLengthArray(PHOTOS),
   }
@@ -80,9 +99,9 @@ const createAd = () => (
   }
 );
 
-const similarAds = Array.from(
+const createAds = Array.from(
   {length: SIMILAR_ADS_COUNT},
   createAd,
 );
 
-console.log(similarAds);
+export {createAds};

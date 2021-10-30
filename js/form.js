@@ -1,47 +1,19 @@
 //Модуль для работы с полями формы
+import {typeMinPrice} from './data.js';
 
-//Валидация поля с заголовком
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
-const titleInput = document.querySelector('#title');
-
-const titleValidity = titleInput.addEventListener('input', () => {
-  const valueLength = titleInput.value.length;
-
-  if (valueLength < MIN_TITLE_LENGTH) {
-    titleInput.setCustomValidity(`Ещё ${ MIN_TITLE_LENGTH - valueLength } симв.`);
-  } else if (valueLength > MAX_TITLE_LENGTH) {
-    titleInput.setCustomValidity(`Удалите лишние ${ valueLength - MAX_TITLE_LENGTH } симв.`);
-  } else {
-    titleInput.setCustomValidity('');
-  }
-
-  titleInput.reportValidity();
-});
-
-//Валидация поля с ценой
-
-const MAX_PRICE = 1000000;
-
-const priceInput = document.querySelector('#price');
-
-const priceValidity = priceInput.addEventListener('input', () => {
-  const price = priceInput.value;
-
-  if (price > MAX_PRICE) {
-    priceInput.setCustomValidity(`Цена не должна превышать ${ MAX_PRICE }`);
-  } else {
-    priceInput.setCustomValidity('');
-  }
-
-  priceInput.reportValidity();
-});
+const adForm = document.querySelector('.ad-form');
+const rooms = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+const titleInput = adForm.querySelector('#title');
+const priceInput = adForm.querySelector('#price');
+const type = adForm.querySelector('#type');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 //Валидация поля с количеством гостей
-
-const rooms = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
 
 const selectValidity = () => {
   const roomsValue = rooms.options[rooms.selectedIndex].value;
@@ -59,25 +31,57 @@ const selectValidity = () => {
 
 selectValidity();
 
-const capacityValidity = capacity.addEventListener('change', selectValidity);
-const roomsValidity = rooms.addEventListener('change', selectValidity);
+capacity.addEventListener('change', selectValidity);
+rooms.addEventListener('change', selectValidity);
 
+//Валидация поля с заголовком
 
-// Проверка всех полей перед отправкой формы
+titleInput.addEventListener('input', () => {
+  const valueLength = titleInput.value.length;
 
-const formValidity = () => {
-  titleValidity();
-  priceValidity();
-  capacityValidity();
-  roomsValidity();
-};
-
-const form = document.querySelector('.ad-form');
-
-form.addEventListener('submit', (evt) => {
-
-  if(!formValidity) {
-    evt.preventDefault();
+  if (valueLength < MIN_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Ещё ${ MIN_TITLE_LENGTH - valueLength } симв.`);
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Удалите лишние ${ valueLength - MAX_TITLE_LENGTH } симв.`);
+  } else {
+    titleInput.setCustomValidity('');
   }
 
+  titleInput.reportValidity();
+});
+
+//Валидация поля с ценой
+
+type.addEventListener('change', () => {
+  const typeValue = type.options[type.selectedIndex].value;
+  const minPrice = typeMinPrice[typeValue];
+
+  priceInput.setAttribute('placeholder', minPrice);
+  priceInput.setAttribute('min', minPrice);
+});
+
+//Соотношение полей с временем заезда/выезда
+
+timeIn.addEventListener('change', () => {
+  const time = timeIn.options[timeIn.selectedIndex].value;
+
+  for (let i=0; i < timeOut.options.length; i++) {
+    timeOut.options[i].removeAttribute('selected', 'selected');
+
+    if (timeOut.options[i].value === time) {
+      timeOut.options[i].setAttribute('selected', 'selected');
+    }
+  }
+});
+
+timeOut.addEventListener('change', () => {
+  const time = timeOut.options[timeOut.selectedIndex].value;
+
+  for (let i=0; i < timeIn.options.length; i++) {
+    timeIn.options[i].removeAttribute('selected', 'selected');
+
+    if (timeIn.options[i].value === time) {
+      timeIn.options[i].setAttribute('selected', 'selected');
+    }
+  }
 });

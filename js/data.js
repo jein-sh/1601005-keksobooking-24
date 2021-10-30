@@ -24,6 +24,16 @@ const typeName = {
 
 export {typeName};
 
+const typeMinPrice = {
+  palace: '10000',
+  flat: '1000',
+  house: '5000',
+  bungalow: '0',
+  hotel: '3000',
+};
+
+export {typeMinPrice};
+
 const CHECK_IN_OUT = [
   '12:00',
   '13:00',

@@ -14,24 +14,25 @@ const TYPE = [
   'hotel',
 ];
 
-const getTypeName = (type) => {
-  switch(type) {
-    case 'flat':
-      return 'Квартира';
-    case 'palace':
-      return 'Дворец';
-    case 'house':
-      return 'Дом';
-    case 'bungalow':
-      return 'Бунгало';
-    case 'hotel':
-      return 'Отель';
-    default:
-      return 'Неизвестен';
-  }
+const typeName = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+  hotel: 'Отель',
 };
 
-export {getTypeName};
+export {typeName};
+
+const typeMinPrice = {
+  palace: '10000',
+  flat: '1000',
+  house: '5000',
+  bungalow: '0',
+  hotel: '3000',
+};
+
+export {typeMinPrice};
 
 const CHECK_IN_OUT = [
   '12:00',
@@ -98,6 +99,8 @@ const createAd = () => (
     location: getLocation(),
   }
 );
+
+export {createAd};
 
 const createAds = Array.from(
   {length: SIMILAR_ADS_COUNT},

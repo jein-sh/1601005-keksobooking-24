@@ -15,7 +15,7 @@ const timeOut = adForm.querySelector('#timeout');
 
 //Валидация поля с количеством гостей
 
-const selectValidity = () => {
+const onChangeOption = () => {
   const roomsValue = rooms.options[rooms.selectedIndex].value;
   const capacityValue = capacity.options[capacity.selectedIndex].value;
   if (capacityValue === '0' && roomsValue !== '100') {
@@ -29,10 +29,10 @@ const selectValidity = () => {
   }
 };
 
-selectValidity();
+onChangeOption();
 
-capacity.addEventListener('change', selectValidity);
-rooms.addEventListener('change', selectValidity);
+capacity.addEventListener('change', onChangeOption);
+rooms.addEventListener('change', onChangeOption);
 
 //Валидация поля с заголовком
 
@@ -62,26 +62,10 @@ type.addEventListener('change', () => {
 
 //Соотношение полей с временем заезда/выезда
 
-timeIn.addEventListener('change', () => {
-  const time = timeIn.options[timeIn.selectedIndex].value;
-
-  for (let i=0; i < timeOut.options.length; i++) {
-    timeOut.options[i].removeAttribute('selected', 'selected');
-
-    if (timeOut.options[i].value === time) {
-      timeOut.options[i].setAttribute('selected', 'selected');
-    }
-  }
+timeIn.addEventListener('change', (evt) => {
+  timeOut.value = evt.target.value;
 });
 
-timeOut.addEventListener('change', () => {
-  const time = timeOut.options[timeOut.selectedIndex].value;
-
-  for (let i=0; i < timeIn.options.length; i++) {
-    timeIn.options[i].removeAttribute('selected', 'selected');
-
-    if (timeIn.options[i].value === time) {
-      timeIn.options[i].setAttribute('selected', 'selected');
-    }
-  }
+timeOut.addEventListener('change', (evt) => {
+  timeIn.value = evt.target.value;
 });

@@ -102,7 +102,7 @@ const createAd = () => (
 
 export {createAd};
 
-const createAds = Array.from(
+const createAds = () => Array.from(
   {length: SIMILAR_ADS_COUNT},
   createAd,
 );

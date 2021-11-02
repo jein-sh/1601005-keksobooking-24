@@ -1,8 +1,15 @@
 //Модуль для работы с полями формы
-import {typeMinPrice} from './data.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+
+const typeMinPrice = {
+  palace: '10000',
+  flat: '1000',
+  house: '5000',
+  bungalow: '0',
+  hotel: '3000',
+};
 
 const adForm = document.querySelector('.ad-form');
 const rooms = adForm.querySelector('#room_number');
@@ -28,8 +35,6 @@ const onChangeOption = () => {
     capacity.setCustomValidity('');
   }
 };
-
-onChangeOption();
 
 capacity.addEventListener('change', onChangeOption);
 rooms.addEventListener('change', onChangeOption);

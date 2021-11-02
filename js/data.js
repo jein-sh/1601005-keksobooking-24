@@ -1,4 +1,4 @@
-//Модуль, который создает данные
+/* //Модуль, который создает данные
 
 import {getRandomFromRange, getRandomFloatFromRange, getRandomLengthArray, getRandomArrayElement} from './util.js';
 
@@ -107,4 +107,4 @@ const createAds = () => Array.from(
   createAd,
 );
 
-export {createAds};
+export {createAds}; */

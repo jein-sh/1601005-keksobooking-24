@@ -1,11 +1,12 @@
 // Модуль для работы с картой
 
-import {createAds} from './data.js';
+import {getData} from './api.js';
 import {getAdElement} from './popup-card.js';
 
-const similarAds = createAds();
-
 // Перевод формы в неактивное состояние до загрузки карты
+
+const DEFAULT_LAT = 35.68950;
+const DEFAULT_LNG = 139.69171;
 
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('.ad-form__element');
@@ -15,6 +16,7 @@ const mapFilter = mapFilters.querySelectorAll('.map__filter');
 const mapFeatures = mapFilters.querySelector('.map__features');
 
 const addressInput = adForm.querySelector('#address');
+addressInput.setAttribute('value', `${DEFAULT_LAT}, ${DEFAULT_LNG}`);
 
 const getAttributeDisabled = (element) => {
   element.setAttribute('disabled', 'disabled');
@@ -51,8 +53,8 @@ const activateForm = () => {
 const map = L.map('map-canvas')
   .on('load', activateForm)
   .setView({
-    lat: 35.68950,
-    lng: 139.69171,
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
   }, 10);
 
 L.tileLayer(
@@ -73,8 +75,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.68950,
-    lng: 139.69171,
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
   },
   {
     draggable: true,
@@ -84,32 +86,40 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-addressInput.value = `${mainPinMarker.getLatLng().lat}, ${mainPinMarker.getLatLng().lng}`;
-
 mainPinMarker.on('moveend', (evt) => {
   addressInput.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
 //создание группы маркеров объявлений
 
-similarAds.forEach((similarAd) => {
+const renderAdPins = (similarAds) => {
 
-  const pinIcon = L.icon({
-    iconUrl: '../img/pin.svg',
-    iconSize:     [40, 40],
-    iconAnchor:   [20, 40],
+  similarAds.forEach((similarAd) => {
 
+    const pinIcon = L.icon({
+      iconUrl: '../img/pin.svg',
+      iconSize:     [40, 40],
+      iconAnchor:   [20, 40],
+
+    });
+
+    const pinMarker = L.marker({
+      lat: similarAd.location.lat,
+      lng: similarAd.location.lng,
+    },
+    {
+      icon: pinIcon,
+    });
+
+    pinMarker
+      .addTo(map)
+      .bindPopup(getAdElement(similarAd));
   });
 
-  const pinMarker = L.marker({
-    lat: similarAd.location.lat,
-    lng: similarAd.location.lng,
-  },
-  {
-    icon: pinIcon,
-  });
+};
 
-  pinMarker
-    .addTo(map)
-    .bindPopup(getAdElement(similarAd));
+const SIMILAR_AD_COUNT = 10;
+
+getData((ads) => {
+  renderAdPins(ads.slice(0, SIMILAR_AD_COUNT));
 });

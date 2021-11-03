@@ -15,29 +15,39 @@ const similarAdTemplate = document.querySelector('#card')
   .querySelector('.popup');
 
 const getPhotoList = async (photosArr, element) => {
-  const adPhotos = element.querySelector('.popup__photos');
-  const adPhoto = element.querySelector('.popup__photo');
+  const elementPhotos = element.querySelector('.popup__photos');
+  const elementPhoto = element.querySelector('.popup__photo');
 
-  adPhotos.innerHTML = '';
+  if (photosArr) {
+    elementPhotos.innerHTML = '';
 
-  photosArr.forEach((photo) => {
-    const adPhotosItem = adPhoto.cloneNode(true);
-    adPhotosItem.src = photo;
-    adPhotos.appendChild(adPhotosItem);
-  });
+    photosArr.forEach((photo) => {
+      const elementPhotosItem = elementPhoto.cloneNode(true);
+      elementPhotosItem.src = photo;
+      elementPhotos.appendChild(elementPhotosItem);
+    });
+
+  } else {
+    elementPhotos.classList.add('hidden');
+  }
 };
 
 const getFeaturesList = async (featuresArr, element) => {
 
-  element.querySelectorAll('.popup__feature').forEach((featuresItem) => {
-    const isNecessary = featuresArr.some(
-      (similarFeature) => featuresItem.classList.contains(`popup__feature--${similarFeature}`),
-    );
+  if (featuresArr) {
+    element.querySelectorAll('.popup__feature').forEach((featuresItem) => {
+      const isNecessary = featuresArr.some(
+        (similarFeature) => featuresItem.classList.contains(`popup__feature--${similarFeature}`),
+      );
 
-    if (!isNecessary) {
-      featuresItem.remove();
-    }
-  });
+      if (!isNecessary) {
+        featuresItem.remove();
+      }
+    });
+
+  } else {
+    element.querySelector('.popup__features').classList.add('hidden');
+  }
 };
 
 const getAdElement = (obj) => {

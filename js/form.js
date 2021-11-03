@@ -1,5 +1,8 @@
 //Модуль для работы с полями формы
 
+import { sendData } from './api.js';
+import { showMessageSuccess, showMessageError } from './message.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
@@ -73,4 +76,19 @@ timeIn.addEventListener('change', (evt) => {
 
 timeOut.addEventListener('change', (evt) => {
   timeIn.value = evt.target.value;
+});
+
+//Обработка отправки формы
+
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  sendData(
+    () => {
+      showMessageSuccess();
+      adForm.reset();
+    },
+    () => showMessageError(),
+    new FormData(evt.target),
+  );
 });

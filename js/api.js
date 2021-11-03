@@ -1,18 +1,9 @@
 //Модуль для работы с сервером
 
-import  {showMessage, showAlert} from './message.js';
-
-const adForm = document.querySelector('.ad-form');
-const success = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-
-const error = document.querySelector('#error')
-  .content
-  .querySelector('.error');
+import  {showAlert} from './message.js';
 
 const getData = (onSuccess) => {
-  fetch('https://24.javascript.pages.academy/keksobooking/dat1a')
+  fetch('https://24.javascript.pages.academy/keksobooking/data')
     .then((response) => {
       if (response.ok) {
         response.json()
@@ -28,27 +19,25 @@ const getData = (onSuccess) => {
     });
 };
 
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const sendData = (onSuccess, onError, body) => {
 
   fetch(
     'https://24.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
-      body: new FormData(adForm),
+      body,
     },
   )
     .then((response) => {
       if (response.ok) {
-        showMessage(success);
-        adForm.reset();
+        onSuccess();
       } else {
-        showMessage(error);
+        onError();
       }
     })
     .catch(() => {
-      showMessage(error);
+      onError();
     });
-});
+};
 
-export {getData};
+export {getData, sendData};

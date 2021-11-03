@@ -4,11 +4,17 @@ const ALERT_SHOW_TIME = 5000;
 
 const body = document.querySelector('body');
 const fragment = document.createDocumentFragment();
+const success = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+
+const error = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const closeMessage = () => {
   const messageSuccess = document.querySelector('.success');
   const messageError = document.querySelector('.error');
-
 
   if (messageSuccess) {
     messageSuccess.remove();
@@ -35,12 +41,19 @@ const onMessageClick = (evt) => {
 
 const showMessage = (messageTemplate) => {
   const message = messageTemplate.cloneNode(true);
+
   fragment.appendChild(message);
   body.appendChild(fragment);
 
   document.addEventListener('keydown', onEscKeydown);
-
   document.addEventListener('click', onMessageClick);
+};
+
+const showMessageSuccess = () => {
+  showMessage(success);
+};
+const showMessageError = () => {
+  showMessage(error);
 };
 
 const showAlert = (message) => {
@@ -64,4 +77,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showMessage, showAlert};
+export {showMessageSuccess, showMessageError, showAlert};

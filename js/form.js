@@ -1,8 +1,18 @@
 //Модуль для работы с полями формы
-import {typeMinPrice} from './data.js';
+
+import { sendData } from './api.js';
+import { showMessageSuccess, showMessageError } from './message.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+
+const typeMinPrice = {
+  palace: '10000',
+  flat: '1000',
+  house: '5000',
+  bungalow: '0',
+  hotel: '3000',
+};
 
 const adForm = document.querySelector('.ad-form');
 const rooms = adForm.querySelector('#room_number');
@@ -28,8 +38,6 @@ const onChangeOption = () => {
     capacity.setCustomValidity('');
   }
 };
-
-onChangeOption();
 
 capacity.addEventListener('change', onChangeOption);
 rooms.addEventListener('change', onChangeOption);
@@ -68,4 +76,19 @@ timeIn.addEventListener('change', (evt) => {
 
 timeOut.addEventListener('change', (evt) => {
   timeIn.value = evt.target.value;
+});
+
+//Обработка отправки формы
+
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  sendData(
+    () => {
+      showMessageSuccess();
+      adForm.reset();
+    },
+    () => showMessageError(),
+    new FormData(evt.target),
+  );
 });

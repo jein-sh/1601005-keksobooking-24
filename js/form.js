@@ -2,6 +2,7 @@
 
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError } from './message.js';
+import { clearLayers, setDefaultLocation } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -15,6 +16,7 @@ const typeMinPrice = {
 };
 
 const adForm = document.querySelector('.ad-form');
+const mapFilters = document.querySelector('.map__filters');
 const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const titleInput = adForm.querySelector('#title');
@@ -22,6 +24,8 @@ const priceInput = adForm.querySelector('#price');
 const type = adForm.querySelector('#type');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
+const resetButton = adForm.querySelector('.ad-form__reset');
+
 
 //Валидация поля с количеством гостей
 
@@ -87,8 +91,19 @@ adForm.addEventListener('submit', (evt) => {
     () => {
       showMessageSuccess();
       adForm.reset();
+      mapFilters.reset();
+      setDefaultLocation();
+      clearLayers();
     },
     () => showMessageError(),
     new FormData(evt.target),
   );
+});
+
+//Очистка формы кнопкой очистить
+
+resetButton.addEventListener('click', () =>{
+  mapFilters.reset();
+  setDefaultLocation();
+  clearLayers();
 });

@@ -1,6 +1,5 @@
 // Модуль для работы с картой
 
-import {getData} from './api.js';
 import {getAdElement} from './popup-card.js';
 
 // Перевод формы в неактивное состояние до загрузки карты
@@ -90,7 +89,17 @@ mainPinMarker.on('moveend', (evt) => {
   addressInput.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
-//создание группы маркеров объявлений
+//Функция которая возвращает главный маркер на исходную позицию
+const setDefaultLocation = () => {
+  mainPinMarker.setLatLng({
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
+  });
+};
+
+//создание группы маркеров объявлений на отдельном слое
+
+const markerGroup = L.layerGroup().addTo(map);
 
 const renderAdPins = (similarAds) => {
 
@@ -112,14 +121,16 @@ const renderAdPins = (similarAds) => {
     });
 
     pinMarker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(getAdElement(similarAd));
   });
 
 };
 
-const SIMILAR_AD_COUNT = 10;
+//Функця которая очищает слой с маркерами и скрывает балун
 
-getData((ads) => {
-  renderAdPins(ads.slice(0, SIMILAR_AD_COUNT));
-});
+const clearLayers = () => {
+  markerGroup.clearLayers();
+};
+
+export {setDefaultLocation, renderAdPins, clearLayers};

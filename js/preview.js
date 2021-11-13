@@ -1,3 +1,5 @@
+//Модуль для превью аватара и фото жилья
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const avatarFileChooser = document.querySelector('.ad-form__field input[type=file]');
@@ -11,7 +13,7 @@ avatarFileChooser.addEventListener('change', () => {
   const avatarFileName = avatarFile.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => {
-    return avatarFileName.endsWith(it);
+    avatarFileName.endsWith(it);
   });
 
   if (matches) {
@@ -24,13 +26,13 @@ photoFileChooser.addEventListener('change', () => {
   const photoFileName = photoFile.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => {
-    return photoFileName.endsWith(it);
+    photoFileName.endsWith(it);
   });
 
   if (matches) {
     const photoPreview = document.createElement('img');
     photoPreview.setAttribute('whidth', '70');
-    photoPreview.setAttribute('height', '70')
+    photoPreview.setAttribute('height', '70');
     photoContainer.append(photoPreview);
     photoPreview.src = URL.createObjectURL(photoFile);
   }

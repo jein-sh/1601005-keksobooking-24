@@ -2,7 +2,7 @@
 
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError } from './message.js';
-import { clearLayers, setDefaultLocation } from './map.js';
+import { DEFAULT_LAT, DEFAULT_LNG, clearPinsLayer, setDefaultLocation } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -17,6 +17,7 @@ const typeMinPrice = {
 
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
+const addressInput = adForm.querySelector('#address');
 const rooms = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const titleInput = adForm.querySelector('#title');
@@ -26,6 +27,9 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
+//Значение для поля с адресом по умолчанию
+
+addressInput.setAttribute('value', `${DEFAULT_LAT}, ${DEFAULT_LNG}`);
 
 //Валидация поля с количеством гостей
 
@@ -84,26 +88,38 @@ timeOut.addEventListener('change', (evt) => {
 
 //Обработка отправки формы
 
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const setSubmitForm = (cb) => {
 
-  sendData(
-    () => {
-      showMessageSuccess();
-      adForm.reset();
-      mapFilters.reset();
-      setDefaultLocation();
-      clearLayers();
-    },
-    () => showMessageError(),
-    new FormData(evt.target),
-  );
-});
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => {
+        showMessageSuccess();
+        adForm.reset();
+        mapFilters.reset();
+        setDefaultLocation();
+        clearPinsLayer();
+        cb();
+      },
+      () => showMessageError(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export { setSubmitForm };
 
 //Очистка формы кнопкой очистить
 
-resetButton.addEventListener('click', () =>{
-  mapFilters.reset();
-  setDefaultLocation();
-  clearLayers();
-});
+const setClickReset = (cb) => {
+
+  resetButton.addEventListener('click', () =>{
+    mapFilters.reset();
+    setDefaultLocation();
+    clearPinsLayer();
+    cb();
+  });
+};
+
+export { setClickReset };

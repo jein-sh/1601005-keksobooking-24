@@ -1,51 +1,16 @@
 // Модуль для работы с картой
 
-import {getAdElement} from './popup-card.js';
-
-// Перевод формы в неактивное состояние до загрузки карты
+import { activateForm } from './activate-form.js';
+import { getAdElement } from './popup-card.js';
 
 const DEFAULT_LAT = 35.68950;
 const DEFAULT_LNG = 139.69171;
+const SIMILAR_AD_COUNT = 10;
+
+export { DEFAULT_LAT, DEFAULT_LNG };
 
 const adForm = document.querySelector('.ad-form');
-const adFormElements = adForm.querySelectorAll('.ad-form__element');
-
-const mapFilters = document.querySelector('.map__filters');
-const mapFilter = mapFilters.querySelectorAll('.map__filter');
-const mapFeatures = mapFilters.querySelector('.map__features');
-
 const addressInput = adForm.querySelector('#address');
-addressInput.setAttribute('value', `${DEFAULT_LAT}, ${DEFAULT_LNG}`);
-
-const getAttributeDisabled = (element) => {
-  element.setAttribute('disabled', 'disabled');
-};
-
-const disabledForm = () => {
-  adForm.classList.add('ad-form--disabled');
-  adFormElements.forEach(getAttributeDisabled);
-
-  mapFilters.classList.add('map__filters--disabled');
-  mapFilter.forEach(getAttributeDisabled);
-  getAttributeDisabled(mapFeatures);
-};
-
-disabledForm();
-
-//Перевод формы в активное состояние после загрузки карты
-
-const removeAttributeDisabled = (element) => {
-  element.removeAttribute('disabled');
-};
-
-const activateForm = () => {
-  adForm.classList.remove('ad-form--disabled');
-  adFormElements.forEach(removeAttributeDisabled);
-
-  mapFilters.classList.remove('map__filters--disabled');
-  mapFilter.forEach(removeAttributeDisabled);
-  removeAttributeDisabled(mapFeatures);
-};
 
 //создание слоя с картой
 
@@ -90,6 +55,7 @@ mainPinMarker.on('moveend', (evt) => {
 });
 
 //Функция которая возвращает главный маркер на исходную позицию
+
 const setDefaultLocation = () => {
   mainPinMarker.setLatLng({
     lat: DEFAULT_LAT,
@@ -97,11 +63,15 @@ const setDefaultLocation = () => {
   });
 };
 
+export { setDefaultLocation };
+
 //создание группы маркеров объявлений на отдельном слое
 
 const markerGroup = L.layerGroup().addTo(map);
 
-const renderAdPins = (similarAds) => {
+const renderAdPins = (ads) => {
+
+  const similarAds = ads.slice(0, SIMILAR_AD_COUNT);
 
   similarAds.forEach((similarAd) => {
 
@@ -129,8 +99,8 @@ const renderAdPins = (similarAds) => {
 
 //Функця которая очищает слой с маркерами и скрывает балун
 
-const clearLayers = () => {
+const clearPinsLayer = () => {
   markerGroup.clearLayers();
 };
 
-export {setDefaultLocation, renderAdPins, clearLayers};
+export { renderAdPins, clearPinsLayer };

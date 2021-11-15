@@ -63,8 +63,6 @@ const setDefaultLocation = () => {
   });
 };
 
-export { setDefaultLocation };
-
 //создание группы маркеров объявлений на отдельном слое
 
 const markerGroup = L.layerGroup().addTo(map);
@@ -103,4 +101,4 @@ const clearPinsLayer = () => {
   markerGroup.clearLayers();
 };
 
-export { renderAdPins, clearPinsLayer };
+export { setDefaultLocation, renderAdPins, clearPinsLayer };

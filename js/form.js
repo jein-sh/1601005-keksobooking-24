@@ -108,8 +108,6 @@ const setSubmitForm = (cb) => {
   });
 };
 
-export { setSubmitForm };
-
 //Очистка формы кнопкой очистить
 
 const setClickReset = (cb) => {
@@ -122,4 +120,4 @@ const setClickReset = (cb) => {
   });
 };
 
-export { setClickReset };
+export { setSubmitForm,setClickReset };

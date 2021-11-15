@@ -22,7 +22,7 @@ const disabledForm = () => {
   getAttributeDisabled(mapFeatures);
 };
 
-export { disabledForm };
+disabledForm();
 
 //Перевод формы в активное состояние
 

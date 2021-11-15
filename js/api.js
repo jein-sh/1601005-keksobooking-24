@@ -1,6 +1,6 @@
 //Модуль для работы с сервером
 
-import  {showAlert} from './message.js';
+import  { showAlert } from './message.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -40,4 +40,4 @@ const sendData = (onSuccess, onError, body) => {
     });
 };
 
-export {getData, sendData};
+export { getData, sendData };

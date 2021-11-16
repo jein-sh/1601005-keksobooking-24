@@ -1,5 +1,3 @@
-//Модуль фильтрации объявлений
-
 import { renderAdPins, clearPinsLayer } from './map.js';
 import { debounce } from './utils/debounce.js';
 
@@ -10,8 +8,6 @@ const housingRooms = mapFilters.querySelector('#housing-rooms');
 const housingGuests = mapFilters.querySelector('#housing-guests');
 const housingFeatures = document.getElementsByName('features');
 
-//Функция, возвращающая условие для фильтра по типу жилья
-
 const filterHousingType = (ad) => {
   const filterValue = housingType.value;
   if (filterValue === 'any' ) {
@@ -19,8 +15,6 @@ const filterHousingType = (ad) => {
   }
   return ad.offer.type === filterValue;
 };
-
-//Функция, возвращающая условие для фильтра по цене
 
 const filterHousingPrice = (ad) => {
   const filterValue = housingPrice.value;
@@ -33,8 +27,6 @@ const filterHousingPrice = (ad) => {
   }
 };
 
-//Функция, возвращающая условие для фильтра по количеству комнат
-
 const filterHousingRooms = (ad) => {
   const filterValue = housingRooms.value;
   if (filterValue === 'any' ) {
@@ -43,8 +35,6 @@ const filterHousingRooms = (ad) => {
   return ad.offer.rooms === Number(filterValue);
 };
 
-//Функция, возвращающая условие для фильтра по количеству гостей
-
 const filterHousingGuests = (ad) => {
   const filterValue = housingGuests.value;
   if (filterValue === 'any' ) {
@@ -52,8 +42,6 @@ const filterHousingGuests = (ad) => {
   }
   return ad.offer.guests === Number(filterValue);
 };
-
-//Функция, возвращающая условие для фильтра по удобствам
 
 const filterHousingFeatures = (ad) => Array.from(housingFeatures)
   .every((checkbox) => {
@@ -65,8 +53,6 @@ const filterHousingFeatures = (ad) => Array.from(housingFeatures)
     }
     return ad.offer.features.includes(checkbox.value);
   });
-
-//Функция для фильтрации по всем условиям
 
 const getFilteredAds = (ads) => {
   const filteredAds = [];
@@ -85,8 +71,6 @@ const getFilteredAds = (ads) => {
   }
   return filteredAds;
 };
-
-//Функция на изменение фильтров
 
 const onFilterChange = debounce((ads) => {
   const newAds = getFilteredAds(ads);

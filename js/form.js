@@ -1,5 +1,3 @@
-//Модуль для работы с полями формы
-
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError } from './message.js';
 import { DEFAULT_LAT, DEFAULT_LNG, clearPinsLayer, setDefaultLocation } from './map.js';
@@ -27,12 +25,6 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
-//Значение для поля с адресом по умолчанию
-
-addressInput.setAttribute('value', `${DEFAULT_LAT}, ${DEFAULT_LNG}`);
-
-//Валидация поля с количеством гостей
-
 const onChangeOption = () => {
   const roomsValue = rooms.options[rooms.selectedIndex].value;
   const capacityValue = capacity.options[capacity.selectedIndex].value;
@@ -46,47 +38,6 @@ const onChangeOption = () => {
     capacity.setCustomValidity('');
   }
 };
-
-capacity.addEventListener('change', onChangeOption);
-rooms.addEventListener('change', onChangeOption);
-
-//Валидация поля с заголовком
-
-titleInput.addEventListener('input', () => {
-  const valueLength = titleInput.value.length;
-
-  if (valueLength < MIN_TITLE_LENGTH) {
-    titleInput.setCustomValidity(`Ещё ${ MIN_TITLE_LENGTH - valueLength } симв.`);
-  } else if (valueLength > MAX_TITLE_LENGTH) {
-    titleInput.setCustomValidity(`Удалите лишние ${ valueLength - MAX_TITLE_LENGTH } симв.`);
-  } else {
-    titleInput.setCustomValidity('');
-  }
-
-  titleInput.reportValidity();
-});
-
-//Валидация поля с ценой
-
-type.addEventListener('change', () => {
-  const typeValue = type.options[type.selectedIndex].value;
-  const minPrice = typeMinPrice[typeValue];
-
-  priceInput.setAttribute('placeholder', minPrice);
-  priceInput.setAttribute('min', minPrice);
-});
-
-//Соотношение полей с временем заезда/выезда
-
-timeIn.addEventListener('change', (evt) => {
-  timeOut.value = evt.target.value;
-});
-
-timeOut.addEventListener('change', (evt) => {
-  timeIn.value = evt.target.value;
-});
-
-//Обработка отправки формы
 
 const setSubmitForm = (cb) => {
 
@@ -108,8 +59,6 @@ const setSubmitForm = (cb) => {
   });
 };
 
-//Очистка формы кнопкой очистить
-
 const setClickReset = (cb) => {
 
   resetButton.addEventListener('click', () =>{
@@ -119,5 +68,40 @@ const setClickReset = (cb) => {
     cb();
   });
 };
+
+capacity.addEventListener('change', onChangeOption);
+rooms.addEventListener('change', onChangeOption);
+
+titleInput.addEventListener('input', () => {
+  const valueLength = titleInput.value.length;
+
+  if (valueLength < MIN_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Ещё ${ MIN_TITLE_LENGTH - valueLength } симв.`);
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    titleInput.setCustomValidity(`Удалите лишние ${ valueLength - MAX_TITLE_LENGTH } симв.`);
+  } else {
+    titleInput.setCustomValidity('');
+  }
+
+  titleInput.reportValidity();
+});
+
+type.addEventListener('change', () => {
+  const typeValue = type.options[type.selectedIndex].value;
+  const minPrice = typeMinPrice[typeValue];
+
+  priceInput.setAttribute('placeholder', minPrice);
+  priceInput.setAttribute('min', minPrice);
+});
+
+timeIn.addEventListener('change', (evt) => {
+  timeOut.value = evt.target.value;
+});
+
+timeOut.addEventListener('change', (evt) => {
+  timeIn.value = evt.target.value;
+});
+
+addressInput.setAttribute('value', `${DEFAULT_LAT}, ${DEFAULT_LNG}`);
 
 export { setSubmitForm,setClickReset };

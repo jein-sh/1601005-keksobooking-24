@@ -1,7 +1,3 @@
-// Модуль для перевода формы в активное/неактивное состояние
-
-// Перевод формы в неактивное состояние до загрузки карты
-
 const adForm = document.querySelector('.ad-form');
 const adFormElements = adForm.querySelectorAll('.ad-form__element');
 
@@ -23,8 +19,6 @@ const disabledForm = () => {
 };
 
 disabledForm();
-
-//Перевод формы в активное состояние
 
 const removeAttributeDisabled = (element) => {
   element.removeAttribute('disabled');

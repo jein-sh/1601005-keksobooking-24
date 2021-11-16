@@ -1,6 +1,5 @@
-//Модуль для создания сообщений об загрузке/отправке данных
-
 const ALERT_SHOW_TIME = 5000;
+const messageErorData = 'Произошла ошибка загрузки объявлений с сервера';
 
 const body = document.querySelector('body');
 const fragment = document.createDocumentFragment();
@@ -77,4 +76,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showMessageSuccess, showMessageError, showAlert};
+export { messageErorData, showMessageSuccess, showMessageError, showAlert };

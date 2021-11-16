@@ -1,9 +1,10 @@
-//Модуль для работы с сервером
+import  { showAlert, messageErorData } from './message.js';
 
-import  { showAlert } from './message.js';
+const urlApp = 'https://24.javascript.pages.academy/keksobooking';
+const urlAppData = 'https://24.javascript.pages.academy/keksobooking/data';
 
 const getData = (onSuccess) => {
-  fetch('https://24.javascript.pages.academy/keksobooking/data')
+  fetch(urlAppData)
     .then((response) => {
       if (response.ok) {
         response.json()
@@ -11,7 +12,7 @@ const getData = (onSuccess) => {
             onSuccess(ads);
           });
       } else {
-        throw new Error('Произошла ошибка загрузки объявлений с сервера');
+        throw new Error(messageErorData);
       }
     })
     .catch((err) => {
@@ -22,7 +23,7 @@ const getData = (onSuccess) => {
 const sendData = (onSuccess, onError, body) => {
 
   fetch(
-    'https://24.javascript.pages.academy/keksobooking',
+    urlApp,
     {
       method: 'POST',
       body,

@@ -1,5 +1,3 @@
-// Модуль для работы с картой
-
 import { activateForm } from './activate-form.js';
 import { getAdElement } from './popup-card.js';
 
@@ -7,12 +5,8 @@ const DEFAULT_LAT = 35.68950;
 const DEFAULT_LNG = 139.69171;
 const SIMILAR_AD_COUNT = 10;
 
-export { DEFAULT_LAT, DEFAULT_LNG };
-
 const adForm = document.querySelector('.ad-form');
 const addressInput = adForm.querySelector('#address');
-
-//создание слоя с картой
 
 const map = L.map('map-canvas')
   .on('load', activateForm)
@@ -27,8 +21,6 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-
-// создание главного маркера
 
 const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
@@ -54,16 +46,12 @@ mainPinMarker.on('moveend', (evt) => {
   addressInput.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
-//Функция которая возвращает главный маркер на исходную позицию
-
 const setDefaultLocation = () => {
   mainPinMarker.setLatLng({
     lat: DEFAULT_LAT,
     lng: DEFAULT_LNG,
   });
 };
-
-//создание группы маркеров объявлений на отдельном слое
 
 const markerGroup = L.layerGroup().addTo(map);
 
@@ -95,10 +83,8 @@ const renderAdPins = (ads) => {
 
 };
 
-//Функця которая очищает слой с маркерами и скрывает балун
-
 const clearPinsLayer = () => {
   markerGroup.clearLayers();
 };
 
-export { setDefaultLocation, renderAdPins, clearPinsLayer };
+export { DEFAULT_LAT, DEFAULT_LNG, setDefaultLocation, renderAdPins, clearPinsLayer };

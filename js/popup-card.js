@@ -1,5 +1,3 @@
-//Модуль для генерации разметки объявления
-
 const typeName = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -7,8 +5,6 @@ const typeName = {
   bungalow: 'Бунгало',
   hotel: 'Отель',
 };
-
-// Создаем разметку объявления
 
 const similarAdTemplate = document.querySelector('#card')
   .content

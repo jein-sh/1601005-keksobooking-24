@@ -6,7 +6,7 @@ const housingType = mapFilters.querySelector('#housing-type');
 const housingPrice = mapFilters.querySelector('#housing-price');
 const housingRooms = mapFilters.querySelector('#housing-rooms');
 const housingGuests = mapFilters.querySelector('#housing-guests');
-const housingFeatures = document.getElementsByName('features');
+const housingFeatures = mapFilters.querySelectorAll('.map__feature');
 
 const filterHousingType = (ad) => {
   const filterValue = housingType.value;

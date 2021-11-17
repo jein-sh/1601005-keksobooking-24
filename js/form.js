@@ -1,9 +1,11 @@
 import { sendData } from './api.js';
 import { showMessageSuccess, showMessageError } from './message.js';
 import { DEFAULT_LAT, DEFAULT_LNG, clearPinsLayer, setDefaultLocation } from './map.js';
+import { clearAvatarPreview, clearPhotoPreview } from './preview.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+const pricePlaceholder = '1000';
 
 const typeMinPrice = {
   palace: '10000',
@@ -39,6 +41,10 @@ const onChangeOption = () => {
   }
 };
 
+const setPricePlaceholder = (price) => {
+  priceInput.setAttribute('placeholder', price);
+};
+
 const setSubmitForm = (cb) => {
 
   adForm.addEventListener('submit', (evt) => {
@@ -49,7 +55,10 @@ const setSubmitForm = (cb) => {
         showMessageSuccess();
         adForm.reset();
         mapFilters.reset();
+        clearPhotoPreview();
+        clearAvatarPreview();
         setDefaultLocation();
+        setPricePlaceholder(pricePlaceholder);
         clearPinsLayer();
         cb();
       },
@@ -63,7 +72,10 @@ const setClickReset = (cb) => {
 
   resetButton.addEventListener('click', () =>{
     mapFilters.reset();
+    clearPhotoPreview();
+    clearAvatarPreview();
     setDefaultLocation();
+    setPricePlaceholder(pricePlaceholder);
     clearPinsLayer();
     cb();
   });
@@ -90,7 +102,7 @@ type.addEventListener('change', () => {
   const typeValue = type.options[type.selectedIndex].value;
   const minPrice = typeMinPrice[typeValue];
 
-  priceInput.setAttribute('placeholder', minPrice);
+  setPricePlaceholder(minPrice);
   priceInput.setAttribute('min', minPrice);
 });
 
@@ -104,4 +116,4 @@ timeOut.addEventListener('change', (evt) => {
 
 addressInput.setAttribute('value', `${DEFAULT_LAT}, ${DEFAULT_LNG}`);
 
-export { setSubmitForm,setClickReset };
+export { setSubmitForm, setClickReset };

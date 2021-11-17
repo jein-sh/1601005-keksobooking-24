@@ -9,7 +9,7 @@ const getAttributeDisabled = (element) => {
   element.setAttribute('disabled', 'disabled');
 };
 
-const disabledForm = () => {
+const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
   adFormElements.forEach(getAttributeDisabled);
 
@@ -18,7 +18,7 @@ const disabledForm = () => {
   getAttributeDisabled(mapFeatures);
 };
 
-disabledForm();
+disableForm();
 
 const removeAttributeDisabled = (element) => {
   element.removeAttribute('disabled');

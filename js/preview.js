@@ -1,5 +1,5 @@
 const TYPES_OF_FILE = ['gif', 'jpg', 'jpeg', 'png'];
-const defaultIconAvatar = 'img/muffin-grey.svg';
+const DEFAULT_ICON_AVATAR = 'img/muffin-grey.svg';
 
 const avatarFileChooser = document.querySelector('.ad-form__field input[type=file]');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
@@ -8,7 +8,7 @@ const photoFileChooser = document.querySelector('.ad-form__upload input[type=fil
 const photoContainer = document.querySelector('.ad-form__photo');
 
 const clearAvatarPreview = () => {
-  avatarPreview.src = defaultIconAvatar;
+  avatarPreview.src = DEFAULT_ICON_AVATAR;
 };
 
 const clearPhotoPreview = () => {

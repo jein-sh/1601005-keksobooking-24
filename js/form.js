@@ -5,7 +5,7 @@ import { clearAvatarPreview, clearPhotoPreview } from './preview.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-const pricePlaceholder = '1000';
+const PRICE_PLACEHOLDER = '1000';
 
 const typeMinPrice = {
   palace: '10000',
@@ -58,7 +58,7 @@ const setSubmitForm = (cb) => {
         clearPhotoPreview();
         clearAvatarPreview();
         setDefaultLocation();
-        setPricePlaceholder(pricePlaceholder);
+        setPricePlaceholder(PRICE_PLACEHOLDER);
         clearPinsLayer();
         cb();
       },
@@ -75,7 +75,7 @@ const setClickReset = (cb) => {
     clearPhotoPreview();
     clearAvatarPreview();
     setDefaultLocation();
-    setPricePlaceholder(pricePlaceholder);
+    setPricePlaceholder(PRICE_PLACEHOLDER);
     clearPinsLayer();
     cb();
   });

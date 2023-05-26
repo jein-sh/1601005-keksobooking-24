@@ -1,7 +1,7 @@
 import  { showAlert, messageErorData } from './message.js';
 
-const urlApp = 'https://24.javascript.pages.academy/keksobooking';
-const urlAppData = 'https://24.javascript.pages.academy/keksobooking/data';
+const urlApp = 'https://27.javascript.pages.academy/keksobooking';
+const urlAppData = 'https://27.javascript.pages.academy/keksobooking/data';
 
 const getData = (onSuccess) => {
   fetch(urlAppData)
